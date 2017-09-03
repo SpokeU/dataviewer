@@ -1,0 +1,71 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* Connection list */
+
+.collaplible-data-list img{
+  height: 25px;
+  width: 25px;
+}
+
+.collaplible-data-list-item{
+  padding: 10px;
+  border-bottom: 1px solid rgb(248,246,250);
+}
+
+.item-header{
+  background-color: rgb(248,246,250);
+  padding: 10px;
+}
+
+.item-header .glyphicon{
+  display: inline;
+  cursor: pointer;
+}
+
+.item-header img{
+  display: inline;
+  margin-left: 20px;
+}
+
+.item-header h4{
+  display: inline;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.header-conneciton-string{
+  display: inline;
+  font-style: italic;
+  margin-left: 20px;
+}
+
+.item-data{
+  padding: 20px;
+}
+
+.item-input{
+  display: inline-block;
+  width: 40%;
+  margin-left: 20px;
+}
+
+.hidden{
+  display: none;
+}
+
+.btn-add{
+  margin-right: 30px;
+}
+
+/* Queries */
+
+.query-list{
+
+}
+
+.query {
+  border-bottom: 1px solid rgb(248,246,250);
+}
