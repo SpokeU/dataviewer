@@ -1,10 +1,9 @@
 package com.seriouscompany.dataviewer.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-public class Connection {
+public class ConnectionDetails {
 
     @Id
     @GeneratedValue
@@ -16,6 +15,7 @@ public class Connection {
     private String name;
     private String host;
     private Integer port;
+    private String database;
     private String user;
     private String password;
 
@@ -57,6 +57,14 @@ public class Connection {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
     public String getUser() {

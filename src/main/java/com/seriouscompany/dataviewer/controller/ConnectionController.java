@@ -1,8 +1,11 @@
 package com.seriouscompany.dataviewer.controller;
 
-import com.seriouscompany.dataviewer.connection.ConnectionProvider;
+import com.mongodb.MongoClient;
+import com.seriouscompany.dataviewer.connection.ConnectionFactory;
+import com.seriouscompany.dataviewer.connection.DBConnection;
+import com.seriouscompany.dataviewer.connection.QueryResult;
 import com.seriouscompany.dataviewer.dao.ConnectionRestRepository;
-import com.seriouscompany.dataviewer.model.Connection;
+import com.seriouscompany.dataviewer.model.ConnectionDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,16 +19,17 @@ import java.util.Map;
 public class ConnectionController {
 
     @Autowired
-    private ConnectionProvider connectionProvider;
+    private ConnectionFactory connectionFactory;
 
     @Autowired
     private ConnectionRestRepository connectionRestRepository;
 
     @RequestMapping(path = "/{id}/runQuery", method = RequestMethod.POST)
     public String run(Integer id, @RequestBody RunQueryParameters params) {
-        Connection connection = connectionRestRepository.getOne(Long.valueOf(id));
-        connectionProvider.get(connection)
-        return null;
+        ConnectionDetails connectionDetails = connectionRestRepository.getOne(Long.valueOf(id));
+        DBConnection connection = connectionFactory.getConnection(connectionDetails);
+        QueryResult result = connection.executeQuery(params.getQueryString());
+        return result.toString();
     }
 
 
