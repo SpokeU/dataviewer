@@ -14,10 +14,8 @@ public class Query {
 
     private String query;
 
-    @OneToMany(mappedBy = "query")
-    private List<QueryParam> params;
-
-    private Connection connection;
+    @ElementCollection
+    private List<String> params;
 
     public Long getId() {
         return id;
@@ -43,19 +41,12 @@ public class Query {
         this.query = query;
     }
 
-    public List<QueryParam> getParams() {
+    public List<String> getParams() {
         return params;
     }
 
-    public void setParams(List<QueryParam> params) {
+    public void setParams(List<String> params) {
         this.params = params;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
 }

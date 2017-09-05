@@ -11,7 +11,6 @@ public class Connection {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private ConnectionType type;
 
     private String name;

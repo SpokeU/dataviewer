@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Component
 public class ConnectionProvider {
 
-    public <T>T forType(ConnectionType type){
+    public <T>T get(String id){
 
         return null;
     }

@@ -22,11 +22,4 @@ public class QueryController {
     @Autowired
     private ConnectionProvider connectionProvider;
 
-    @RequestMapping(path = "/query/{id}/run", method = RequestMethod.POST)
-    public String run(@PathParam("id") Integer id, @RequestBody Map<String, String> parameters){
-        Query query = queryRepository.findOne(Long.valueOf(id));
-        MongoClient client = connectionProvider.forType(query.getConnection().getType());
-        return "";
-    }
-
 }
