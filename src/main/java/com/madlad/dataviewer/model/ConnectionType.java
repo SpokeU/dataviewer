@@ -1,4 +1,4 @@
-package com.seriouscompany.dataviewer.model;
+package com.madlad.dataviewer.model;
 
 public enum ConnectionType {
     MONGO, MYSQL, POSTGRES, MSSQL

@@ -1,4 +1,4 @@
-package com.seriouscompany.dataviewer.model;
+package com.madlad.dataviewer.model;
 
 import javax.persistence.*;
 import java.util.List;

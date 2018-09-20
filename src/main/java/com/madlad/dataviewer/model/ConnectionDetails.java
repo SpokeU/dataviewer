@@ -1,7 +1,13 @@
-package com.seriouscompany.dataviewer.model;
+package com.madlad.dataviewer.model;
 
 import javax.persistence.*;
-
+/**
+ * 
+ * TODO: Connection details should be abstract and subclasses will declare all required fields for particular
+ * 
+ * @author Oleksandr_Myshko
+ *
+ */
 @Entity
 public class ConnectionDetails {
 
