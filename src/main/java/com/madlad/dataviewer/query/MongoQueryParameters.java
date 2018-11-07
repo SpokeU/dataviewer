@@ -4,5 +4,6 @@ public class MongoQueryParameters {
 
 	public static final String DB = "database";
 	public static final String COLLECTION = "collection";
-	
+	public static final String FIND = "find";
+
 }

@@ -1,15 +1,19 @@
 package com.madlad.dataviewer.connection.provider;
 
-import java.util.List;
-
 import com.madlad.dataviewer.connection.DBConnection;
 import com.madlad.dataviewer.model.ConnectionDetails;
-import com.madlad.dataviewer.model.ConnectionType;
 
-public interface ConnectionProvider<T> {
+/**
+ * 
+ * @author Oleksandr_Myshko
+ * 
+ * Connection provider is responsible for getting connection details model and creating Connection from it
+ * 
+ * @param <D> Connection details model
+ * @param <R> Connection object
+ */
+public interface ConnectionProvider<D extends ConnectionDetails,R extends DBConnection<?>> {
 
-	public DBConnection<T> getConnection(ConnectionDetails details);
-
-	public List<ConnectionType> handlesTypes();
+	public R getConnection(D details);
 
 }

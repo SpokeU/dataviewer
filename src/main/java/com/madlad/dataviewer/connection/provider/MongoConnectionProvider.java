@@ -1,28 +1,23 @@
 package com.madlad.dataviewer.connection.provider;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
-import org.springframework.stereotype.Component;
-
-import com.madlad.dataviewer.connection.DBConnection;
 import com.madlad.dataviewer.connection.MongoDBConnection;
-import com.madlad.dataviewer.model.ConnectionDetails;
-import com.madlad.dataviewer.model.ConnectionType;
+import com.madlad.dataviewer.model.DBConnectionDetails;
 import com.mongodb.MongoClient;
 
-@Component
-public class MongoConnectionProvider implements ConnectionProvider<MongoClient> {
+public class MongoConnectionProvider implements ConnectionProvider<DBConnectionDetails, MongoDBConnection> {
+	
+	private HashMap<Integer, MongoDBConnection> pool = new HashMap<>();
 
-	public DBConnection<MongoClient> getConnection(ConnectionDetails details) {
-		MongoClient mongo = new MongoClient(details.getHost(), details.getPort());
-		//TODO: connection pooling!
-		return new MongoDBConnection(mongo, details);
+	public MongoDBConnection getConnection(DBConnectionDetails details) {
+		MongoDBConnection mongo = pool.computeIfAbsent(details.hashCode(), hashCode -> createConnection(details));
+		return mongo;
 	}
-
-	@Override
-	public List<ConnectionType> handlesTypes() {
-		return Arrays.asList(ConnectionType.MONGO);
+	
+	private MongoDBConnection createConnection(DBConnectionDetails details) {
+		MongoClient mongo = new MongoClient(details.getHost(), details.getPort());
+		return new MongoDBConnection(mongo);
 	}
 
 }
