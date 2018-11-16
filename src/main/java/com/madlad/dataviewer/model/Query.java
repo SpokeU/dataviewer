@@ -1,7 +1,11 @@
 package com.madlad.dataviewer.model;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.Map;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Query {
@@ -15,7 +19,7 @@ public class Query {
     private String query;
 
     @ElementCollection
-    private List<String> params;
+    private Map<String,String> params;
 
     public Long getId() {
         return id;
@@ -41,11 +45,11 @@ public class Query {
         this.query = query;
     }
 
-    public List<String> getParams() {
+    public Map<String,String> getParams() {
         return params;
     }
 
-    public void setParams(List<String> params) {
+    public void setParams(Map<String,String> params) {
         this.params = params;
     }
 

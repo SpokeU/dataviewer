@@ -1,35 +1,32 @@
 package com.madlad.dataviewer.model;
 
-import javax.persistence.*;
+import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 
 /**
  * 
  * TODO: Connection details should be abstract and subclasses will declare all
  * required fields for particular
  * 
- * This is a single class which is used for parsing connection details from UI in JSON and when for storing and retrieving it from DB.
- * Thats why so many annotations
+ * This is a single class which is used for parsing connection details from UI
+ * in JSON and when for storing and retrieving it from DB. Thats why so many
+ * annotations
  * 
  * @author Oleksandr_Myshko
  *
  */
-@Entity
-@Inheritance(
-	    strategy = InheritanceType.SINGLE_TABLE
-	)
-@JsonTypeInfo(
-		use = JsonTypeInfo.Id.NAME,
-		include = JsonTypeInfo.As.PROPERTY,
-		property = "type",
-		visible = true)
-@JsonSubTypes({
-	@Type(value = DBConnectionDetails.class, name = "MONGO")
-})
-public abstract class ConnectionDetails {
+@Entity(name = "connection")
+public class ConnectionDetails {
 
 	@Id
 	@GeneratedValue
@@ -38,7 +35,25 @@ public abstract class ConnectionDetails {
 	private String name;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "type")
 	private ConnectionType type;
+
+	@ElementCollection(targetClass = String.class)
+	@CollectionTable(name = "connection_parameters", joinColumns = @JoinColumn(name = "connection_id"))
+	@MapKeyColumn(name = "name")
+	@Column(name = "value")
+	private Map<String, String> connectionParameters;
+
+	public ConnectionDetails() {
+		super();
+	}
+
+	public ConnectionDetails(String name, ConnectionType type, Map<String, String> connectionParameters) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.connectionParameters = connectionParameters;
+	}
 
 	public Long getId() {
 		return id;
@@ -46,6 +61,14 @@ public abstract class ConnectionDetails {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public ConnectionType getType() {
@@ -56,12 +79,12 @@ public abstract class ConnectionDetails {
 		this.type = type;
 	}
 
-	public String getName() {
-		return name;
+	public Map<String, String> getConnectionParameters() {
+		return connectionParameters;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setConnectionParameters(Map<String, String> connectionParameters) {
+		this.connectionParameters = connectionParameters;
 	}
 
 	@Override
@@ -97,7 +120,5 @@ public abstract class ConnectionDetails {
 			return false;
 		return true;
 	}
-	
-	
 
 }

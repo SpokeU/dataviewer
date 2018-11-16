@@ -1,4 +1,4 @@
-package com.madlad.dataviewer.repository.rest;
+package com.madlad.dataviewer.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

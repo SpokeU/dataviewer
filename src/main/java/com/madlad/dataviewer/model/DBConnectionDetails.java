@@ -1,14 +1,11 @@
 package com.madlad.dataviewer.model;
 
-import javax.persistence.Entity;
-
-@Entity
 public class DBConnectionDetails extends ConnectionDetails {
 
 	private String host;
 	private Integer port;
 
-	private String user;
+	private String username;
 	private String password;
 
 	public String getHost() {
@@ -28,11 +25,11 @@ public class DBConnectionDetails extends ConnectionDetails {
 	}
 
 	public String getUser() {
-		return user;
+		return username;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.username = user;
 	}
 
 	public String getPassword() {
@@ -50,7 +47,7 @@ public class DBConnectionDetails extends ConnectionDetails {
 		result = prime * result + ((host == null) ? 0 : host.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((port == null) ? 0 : port.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -78,10 +75,10 @@ public class DBConnectionDetails extends ConnectionDetails {
 				return false;
 		} else if (!port.equals(other.port))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
