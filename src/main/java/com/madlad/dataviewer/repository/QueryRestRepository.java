@@ -5,6 +5,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.madlad.dataviewer.model.Query;
 
-@RepositoryRestResource(collectionResourceRel = "query", path = "/rest-query")
-public interface QueryRestRepository extends PagingAndSortingRepository<Query, Long>{
+public interface QueryRestRepository {
 }

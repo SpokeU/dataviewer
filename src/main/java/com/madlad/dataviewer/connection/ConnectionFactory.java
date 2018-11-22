@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.madlad.dataviewer.config.Dataviewer;
 import com.madlad.dataviewer.connection.provider.ConnectionProvider;
-import com.madlad.dataviewer.model.ConnectionDetails;
+import com.madlad.dataviewer.entity.ConnectionDetails;
 import com.madlad.dataviewer.utils.ViewerUtils;
 
 @Component

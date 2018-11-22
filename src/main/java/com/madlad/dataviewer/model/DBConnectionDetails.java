@@ -1,5 +1,7 @@
 package com.madlad.dataviewer.model;
 
+import com.madlad.dataviewer.entity.ConnectionDetails;
+
 public class DBConnectionDetails extends ConnectionDetails {
 
 	private String host;

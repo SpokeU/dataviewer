@@ -30,10 +30,11 @@ public class DataviewerApplication {
     	//provider.getConnection(dbDetails);
     	
     	
-    	MongoClient mongoClient = new MongoClient("localhost", 27017);
+    	/*MongoClient mongoClient = new MongoClient("localhost", 27017);
     	MongoDatabase db = mongoClient.getDatabase("test_db");
     	MongoCollection<Document> collection = db.getCollection("test_collection");
-		Document result = collection.find(BasicDBObject.parse("{\"username\":\"a\"}")).first();
-        return result.toJson();
+		Document result = collection.find(BasicDBObject.parse("{\"username\":\"a\"}")).first();*/
+
+        return "Ok";
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.madlad.dataviewer.connection.exception.ConnectionFailedException;
-import com.madlad.dataviewer.model.ConnectionDetails;
+import com.madlad.dataviewer.entity.ConnectionDetails;
 import com.madlad.dataviewer.model.ConnectionType;
 
 @Component

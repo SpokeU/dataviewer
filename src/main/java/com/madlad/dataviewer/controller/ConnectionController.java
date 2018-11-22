@@ -4,16 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.madlad.dataviewer.connection.service.ConnectionService;
-import com.madlad.dataviewer.model.ConnectionDetails;
+import com.madlad.dataviewer.entity.ConnectionDetails;
 import com.madlad.dataviewer.model.ConnectionType;
 
 @RestController
@@ -57,25 +53,38 @@ public class ConnectionController {
 	}
 
 	/**
-	 * TODO: Implement
-	 * 
 	 * Returns list of required fields for particular connection type. This is
 	 * required by UI in order to display create connection page.
-	 * 
-	 * TODO: Connection details should be abstract and subclasses will declare
-	 * all required fields for particular
-	 * 
 	 */
-	@RequestMapping(path = "/{type}/parameters", method = RequestMethod.GET)
+	@GetMapping(path = "/{type}/parameters")
 	public List<String> getParametersForConnectionType(@PathVariable ConnectionType type) {
 		return connectionService.getAvaiableParametersForConnection(type);
 	}
 
-	@RequestMapping(path = "/", method = RequestMethod.POST)
+	@GetMapping("/{id}")
+	public ResponseEntity<ConnectionDetails> get(@PathVariable Long id){
+		return connectionService.getById(id).map(details -> new ResponseEntity(details, HttpStatus.OK)).orElse(ResponseEntity.notFound().build());
+	}
+
+	@PostMapping
 	public ConnectionDetails create(@RequestBody Map<String, String> connectionDetails) {
 		String name = connectionDetails.remove(NAME_PARAMETER);
 		ConnectionType type = ConnectionType.valueOf(connectionDetails.remove(TYPE_PARAMETER));
 		return connectionService.saveConnection(name, type, connectionDetails);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ConnectionDetails> update(@PathVariable Long id, @RequestBody Map<String, String> connectionDetails){
+		String name = connectionDetails.remove(NAME_PARAMETER);
+		ConnectionType type = ConnectionType.valueOf(connectionDetails.remove(TYPE_PARAMETER));
+		ConnectionDetails details = connectionService.updateConnection(id, name, type, connectionDetails);
+		return new ResponseEntity<>(details, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity delete(@PathVariable Long id){
+		connectionService.delete(id);
+		return ResponseEntity.accepted().build();
 	}
 
 	public static class RunQueryParameters {
