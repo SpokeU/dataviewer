@@ -12,7 +12,7 @@ import com.madlad.dataviewer.entity.ConnectionDetails;
  * @param <D> Connection details model
  * @param <R> Connection object
  */
-public interface ConnectionProvider<D extends ConnectionDetails,R extends DBConnection<?>> {
+public interface ConnectionProvider<D,R extends DBConnection<?>> {
 
 	public R getConnection(D details);
 

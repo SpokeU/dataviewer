@@ -12,7 +12,7 @@ public abstract class DBConnection<T> {
 		this.connection = connection;
 	}
 
-	public abstract QueryResult<?> search(String query, Map<String, String> paramenters);
+	public abstract QueryResult<?> search(String query, Map<String, String> parameters);
 
 	public abstract boolean testConnection();
 

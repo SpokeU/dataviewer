@@ -8,13 +8,6 @@ import javax.persistence.*;
 
 /**
  * 
- * TODO: Connection details should be abstract and subclasses will declare all
- * required fields for particular
- * 
- * This is a single class which is used for parsing connection details from UI
- * in JSON and when for storing and retrieving it from DB. Thats why so many
- * annotations
- * 
  * @author Oleksandr_Myshko
  *
  */

@@ -49,7 +49,7 @@ public class ConnectionController {
 
 	@GetMapping("/types")
 	public List<ConnectionType> getAllTypes() {
-		return connectionService.getAvaiableConnectionTypes();
+		return connectionService.getAvailableConnectionTypes();
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class ConnectionController {
 	 */
 	@GetMapping(path = "/{type}/parameters")
 	public List<String> getParametersForConnectionType(@PathVariable ConnectionType type) {
-		return connectionService.getAvaiableParametersForConnection(type);
+		return connectionService.getAvailableParametersForConnection(type);
 	}
 
 	@GetMapping("/{id}")

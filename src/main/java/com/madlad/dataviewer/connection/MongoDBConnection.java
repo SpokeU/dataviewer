@@ -32,14 +32,13 @@ public class MongoDBConnection extends DBConnection<MongoClient> {
 	 */
 	@Override
 	public boolean testConnection() {
-		boolean available = false;
 		try {
-			available = connection.getAddress() != null;
+			return connection.getAddress() != null;
 		} catch (Exception e) {
 			// log
 		}
 
-		return available;
+		return false;
 	}
 
 }
