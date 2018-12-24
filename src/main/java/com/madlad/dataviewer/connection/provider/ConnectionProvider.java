@@ -1,7 +1,6 @@
 package com.madlad.dataviewer.connection.provider;
 
 import com.madlad.dataviewer.connection.DBConnection;
-import com.madlad.dataviewer.entity.ConnectionDetails;
 
 /**
  * 

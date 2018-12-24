@@ -26,7 +26,7 @@ public class DataviewerApplication {
     @ResponseBody
     public String add() {
     	//ConnectionProvider provider = new MongoConnectionProvider();
-    	//ConnectionDetails dbDetails = new DBConnectionDetails();
+    	//ConnectionDetailsEntity dbDetails = new DBConnectionDetails();
     	//provider.getConnection(dbDetails);
     	
     	

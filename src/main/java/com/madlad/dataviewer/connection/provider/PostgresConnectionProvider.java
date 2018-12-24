@@ -25,7 +25,7 @@ public class PostgresConnectionProvider implements ConnectionProvider<DBConnecti
         String url = "jdbc:postgresql://" +
                 details.getHost() + ":" +
                 details.getPort() + "/" +
-                details.getDatabase() + "?";
+                details.getDatabase();
 
 
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -40,6 +40,6 @@ public class PostgresConnectionProvider implements ConnectionProvider<DBConnecti
             throw new ConnectionFailedException(e);
         }
 
-        return null;
+        return new PostgresConnection(connection);
     }
 }

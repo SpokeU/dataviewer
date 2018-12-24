@@ -3,13 +3,13 @@ package com.madlad.dataviewer.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.madlad.dataviewer.entity.ConnectionDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.madlad.dataviewer.connection.service.ConnectionService;
-import com.madlad.dataviewer.entity.ConnectionDetails;
 import com.madlad.dataviewer.model.ConnectionType;
 
 @RestController
@@ -30,9 +30,9 @@ public class ConnectionController {
 	 */
 /*	@RequestMapping(path = "/{id}/runQuery", method = RequestMethod.POST)
 	public ResponseEntity<QueryResult<?>> run(@PathVariable Integer id, @RequestBody RunQueryParameters params) {
-		ConnectionDetails connectionDetails = connectionRestRepository.getOne(Long.valueOf(id));
+		ConnectionDetailsEntity connectionDetails = connectionRestRepository.getOne(Long.valueOf(id));
 		DBConnection<?> connection = connectionFactory
-				.getConnection(HibernateUtils.unproxy(connectionDetails, ConnectionDetails.class));
+				.getConnection(HibernateUtils.unproxy(connectionDetails, ConnectionDetailsEntity.class));
 		QueryResult<?> result = connection.search(params.getQueryString(), params.getQueryParams());
 		return new ResponseEntity<QueryResult<?>>(result, HttpStatus.OK);
 	}*/
@@ -43,7 +43,7 @@ public class ConnectionController {
 	}
 
 	@PostMapping("/test")
-	public boolean testConnection(@RequestBody ConnectionDetails details) {
+	public boolean testConnection(@RequestBody ConnectionDetailsEntity details) {
 		return false;
 	}
 
@@ -62,22 +62,22 @@ public class ConnectionController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ConnectionDetails> get(@PathVariable Long id){
+	public ResponseEntity<ConnectionDetailsEntity> get(@PathVariable Long id){
 		return connectionService.getById(id).map(details -> new ResponseEntity(details, HttpStatus.OK)).orElse(ResponseEntity.notFound().build());
 	}
 
 	@PostMapping
-	public ConnectionDetails create(@RequestBody Map<String, String> connectionDetails) {
+	public ConnectionDetailsEntity create(@RequestBody Map<String, String> connectionDetails) {
 		String name = connectionDetails.remove(NAME_PARAMETER);
 		ConnectionType type = ConnectionType.valueOf(connectionDetails.remove(TYPE_PARAMETER));
 		return connectionService.saveConnection(name, type, connectionDetails);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ConnectionDetails> update(@PathVariable Long id, @RequestBody Map<String, String> connectionDetails){
+	public ResponseEntity<ConnectionDetailsEntity> update(@PathVariable Long id, @RequestBody Map<String, String> connectionDetails){
 		String name = connectionDetails.remove(NAME_PARAMETER);
 		ConnectionType type = ConnectionType.valueOf(connectionDetails.remove(TYPE_PARAMETER));
-		ConnectionDetails details = connectionService.updateConnection(id, name, type, connectionDetails);
+		ConnectionDetailsEntity details = connectionService.updateConnection(id, name, type, connectionDetails);
 		return new ResponseEntity<>(details, HttpStatus.OK);
 	}
 

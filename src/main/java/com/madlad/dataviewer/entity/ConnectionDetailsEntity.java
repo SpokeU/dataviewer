@@ -12,7 +12,7 @@ import javax.persistence.*;
  *
  */
 @Entity(name = "connection")
-public class ConnectionDetails {
+public class ConnectionDetailsEntity {
 
 	@Id
 	@GeneratedValue
@@ -30,11 +30,11 @@ public class ConnectionDetails {
 	@Column(name = "value")
 	private Map<String, String> connectionParameters;
 
-	public ConnectionDetails() {
+	public ConnectionDetailsEntity() {
 		super();
 	}
 
-	public ConnectionDetails(String name, ConnectionType type, Map<String, String> connectionParameters) {
+	public ConnectionDetailsEntity(String name, ConnectionType type, Map<String, String> connectionParameters) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -91,7 +91,7 @@ public class ConnectionDetails {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ConnectionDetails other = (ConnectionDetails) obj;
+		ConnectionDetailsEntity other = (ConnectionDetailsEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

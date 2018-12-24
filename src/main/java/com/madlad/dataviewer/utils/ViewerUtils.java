@@ -18,7 +18,7 @@ public class ViewerUtils {
 		return Collections.unmodifiableList(viewers);
 	}
 
-	public Dataviewer<?, ?> findByType(ConnectionType type) {
+	public Dataviewer findByType(ConnectionType type) {
 		return viewers.stream().filter(v -> v.type().equals(type)).findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("No provider for type: " + type + " found"));
 	}

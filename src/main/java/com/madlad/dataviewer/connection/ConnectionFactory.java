@@ -1,25 +1,22 @@
 package com.madlad.dataviewer.connection;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.madlad.dataviewer.config.Dataviewer;
 import com.madlad.dataviewer.connection.provider.ConnectionProvider;
-import com.madlad.dataviewer.entity.ConnectionDetails;
+import com.madlad.dataviewer.entity.ConnectionDetailsEntity;
 import com.madlad.dataviewer.utils.ViewerUtils;
 
 @Component
 public class ConnectionFactory {
 
 	@Autowired
-	private List<Dataviewer<?, ?>> viewers;
+	private ViewerUtils viewers;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DBConnection<?> getConnection(ConnectionDetails details) {
+	public DBConnection<?> getConnection(ConnectionDetailsEntity details) {
 
-		ConnectionProvider provider = ViewerUtils.findByType(viewers, details.getType()).connectionProvider();
+		ConnectionProvider provider = viewers.findByType(details.getType()).connectionProvider();
 		return provider.getConnection(details);
 	}
 

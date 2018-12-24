@@ -7,18 +7,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.madlad.dataviewer.config.Dataviewer;
+import com.madlad.dataviewer.entity.ConnectionDetailsEntity;
 import com.madlad.dataviewer.reflection.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.madlad.dataviewer.config.Dataviewer;
 import com.madlad.dataviewer.connection.ConnectionFactory;
-import com.madlad.dataviewer.connection.DBConnection;
-import com.madlad.dataviewer.entity.ConnectionDetails;
 import com.madlad.dataviewer.model.ConnectionType;
 import com.madlad.dataviewer.query.QueryResult;
 import com.madlad.dataviewer.repository.ConnectionRepository;
-import com.madlad.dataviewer.utils.HibernateUtils;
 import com.madlad.dataviewer.utils.ViewerUtils;
 
 @Service
@@ -47,19 +45,19 @@ public class ConnectionService {
     }
 
     //TODO Implement comments
-    public ConnectionDetails saveConnection(String name, ConnectionType type, Map<String, String> parameters) {
+    public ConnectionDetailsEntity saveConnection(String name, ConnectionType type, Map<String, String> parameters) {
         // convert to object connectionDetailsClass by type
         // validate through JSR if everything is present etc.
         // details.setType(type);
-        ConnectionDetails details = new ConnectionDetails(name, type, parameters);
+        ConnectionDetailsEntity details = new ConnectionDetailsEntity(name, type, parameters);
         return repository.save(details);
     }
 
-    public ConnectionDetails updateConnection(Long id, String name, ConnectionType type, Map<String, String> parameters) {
+    public ConnectionDetailsEntity updateConnection(Long id, String name, ConnectionType type, Map<String, String> parameters) {
         // convert to object connectionDetailsClass by type
         // validate through JSR if everything is present etc.
         // details.setType(type);
-        ConnectionDetails details = new ConnectionDetails(name, type, parameters);
+        ConnectionDetailsEntity details = new ConnectionDetailsEntity(name, type, parameters);
         details.setId(id);
         return repository.save(details);
     }
@@ -68,27 +66,33 @@ public class ConnectionService {
         repository.deleteById(id);
     }
 
-    public Optional<ConnectionDetails> getById(Long id) {
+    public Optional<ConnectionDetailsEntity> getById(Long id) {
         return repository.findById(id);
     }
 
     //TODO implement
     public boolean testConnection(Long connectionId) {
-        Optional<ConnectionDetails> connectionDetails = getById(connectionId);
-        ConnectionDetails details = connectionDetails.get();
-        Class<?> viewer = viewers.findByType(details.getType()).connectionDetailsClass();
+        Optional<ConnectionDetailsEntity> connectionDetails = getById(connectionId);
+        ConnectionDetailsEntity details = connectionDetails.get();
 
+        Dataviewer dataviewer = viewers.findByType(details.getType());
+        Class<?> detailsClass = dataviewer.connectionDetailsClass();
+        Object detailsModel = modelMapper.map(detailsClass, details.getConnectionParameters());
+
+        //find connection provider
+        //pass connectionModel to provider to get a connnection
+        //invoke test
 
         //connectionDetails.map(details -> )
-        //DBConnection<?> connection = connectionFactory.getConnection(HibernateUtils.unproxy(connectionDetails, ConnectionDetails.class));
-        return true;
+        //DBConnection<?> connection = connectionFactory.getConnection(HibernateUtils.unproxy(connectionDetails, ConnectionDetailsEntity.class));
+        return dataviewer.connectionProvider().getConnection(detailsModel).testConnection();
     }
 
     public QueryResult<?> runQuery() {
         return null;
     }
 
-/*    private <T> T convertConnectionDetails(ConnectionDetails details){
+/*    private <T> T convertConnectionDetails(ConnectionDetailsEntity details){
         Class<?> viewer = viewers.findByType(details.getType()).connectionDetailsClass();
         return modelMapper.map(viewer, details.getConnectionParameters());
     }*/
