@@ -61,6 +61,11 @@ public class ConnectionController {
 		return connectionService.getAvailableParametersForConnection(type);
 	}
 
+	@GetMapping
+	public List<ConnectionDetailsEntity> getAll(){
+		return connectionService.getAll();
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<ConnectionDetailsEntity> get(@PathVariable Long id){
 		return connectionService.getById(id).map(details -> new ResponseEntity(details, HttpStatus.OK)).orElse(ResponseEntity.notFound().build());

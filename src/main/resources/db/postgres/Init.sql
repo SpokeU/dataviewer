@@ -1,12 +1,13 @@
-DROP TABLE connection_parameters;
-DROP TABLE connection;
+DROP TABLE IF EXISTS query;
+DROP TABLE IF EXISTS connection_parameters;
+DROP TABLE IF EXISTS connection;
 
 CREATE TABLE connection
 (
     id bigint NOT NULL,
-    name character varying(255),
+    name character varying(255) UNIQUE,
     type character varying(255),
-    CONSTRAINT connection_details_pkey PRIMARY KEY (id)
+    CONSTRAINT connection_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE connection_parameters
@@ -15,7 +16,17 @@ CREATE TABLE connection_parameters
     name character varying(255),
     value character varying(255),
 	FOREIGN KEY (connection_id) REFERENCES connection(id)
-)
+);
+
+CREATE TABLE query
+(
+  id bigint NOT NULL,
+  name character varying(255) UNIQUE,
+  query_string character varying,
+  connection_id bigint NOT NULL,
+  CONSTRAINT query_pkey PRIMARY KEY (id),
+  FOREIGN KEY (connection_id) REFERENCES connection(id)
+);
 
 
 

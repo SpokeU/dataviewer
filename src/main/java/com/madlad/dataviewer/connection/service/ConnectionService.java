@@ -75,9 +75,8 @@ public class ConnectionService {
         Optional<ConnectionDetailsEntity> connectionDetails = getById(connectionId);
         ConnectionDetailsEntity details = connectionDetails.get();
 
+        Object detailsModel = convertConnectionDetails(details);
         Dataviewer dataviewer = viewers.findByType(details.getType());
-        Class<?> detailsClass = dataviewer.connectionDetailsClass();
-        Object detailsModel = modelMapper.map(detailsClass, details.getConnectionParameters());
 
         //find connection provider
         //pass connectionModel to provider to get a connnection
@@ -92,8 +91,13 @@ public class ConnectionService {
         return null;
     }
 
-/*    private <T> T convertConnectionDetails(ConnectionDetailsEntity details){
-        Class<?> viewer = viewers.findByType(details.getType()).connectionDetailsClass();
-        return modelMapper.map(viewer, details.getConnectionParameters());
-    }*/
+    private Object convertConnectionDetails(ConnectionDetailsEntity details){
+        Dataviewer dataviewer = viewers.findByType(details.getType());
+        Class<?> detailsClass = dataviewer.connectionDetailsClass();
+        return modelMapper.map(detailsClass, details.getConnectionParameters());
+    }
+
+    public List<ConnectionDetailsEntity> getAll() {
+        return repository.findAll();
+    }
 }
